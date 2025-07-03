@@ -1,0 +1,16 @@
+/* Import Tailwind CSS's base, components, and utilities layers */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Define custom base styles for the application */
+@layer base {
+  body {
+    /* Apply background and text colors for light mode by default */
+    @apply bg-light-bg text-light-text;
+    /* Apply background and text colors for dark mode when the 'dark' class is present */
+    @apply dark:bg-dark-bg dark:text-dark-text;
+    /* Add a smooth transition for color and background-color changes */
+    @apply transition-colors duration-300;
+  }
+}
