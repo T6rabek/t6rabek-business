@@ -31,10 +31,23 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps({ locale }) {
+// *** IMPORTANT CHANGE: Switched from getStaticProps to getServerSideProps ***
+export async function getServerSideProps({ locale, res }) {
+  // If the current locale is not English, and we have a response object (meaning it's a server-side render)
+  // then we perform a redirect.
+  if (locale !== 'en' && res) {
+    res.setHeader('location', '/en'); // Set the Location header for the redirect
+    res.statusCode = 302; // Set the status code to 302 (Found/Temporary Redirect)
+    res.end(); // End the response, sending the redirect
+    return { props: {} }; // Return empty props as the page won't be rendered
+  }
+
+  // If the locale is already 'en', or if the redirect has happened,
+  // then load the English (or whatever the locale is now after redirect) translations.
   return {
     props: {
       ...(await serverSideTranslations(locale, ['common'])),
+      // You can pass additional props to your Home component here if needed
     },
   };
 }
