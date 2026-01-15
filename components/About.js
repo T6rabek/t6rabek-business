@@ -1,92 +1,54 @@
-import { useTranslation } from 'next-i18next';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
-import { CheckCircle } from 'lucide-react';
+import { useTranslation } from 'next-i18next';
+import { MapPin, Rocket, Heart } from 'lucide-react';
 
 const About = () => {
-  const { t } = useTranslation('common');
+    const { t } = useTranslation('common');
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.2,
-      },
-    },
-  };
+    const highlights = [
+        { icon: MapPin, key: 'location', color: 'text-accent-purple' },
+        { icon: Rocket, key: 'passion', color: 'text-accent-cyan' },
+        { icon: Heart, key: 'approach', color: 'text-accent-pink' },
+    ];
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
-  };
+    return (
+        <section id="about" className="section relative overflow-hidden">
+            <div className="absolute inset-0 bg-dots opacity-50" />
 
-  const facts = [
-    t('about_fun_fact_1'),
-    t('about_fun_fact_2'),
-    t('about_fun_fact_3'),
-  ];
+            <div className="container mx-auto relative z-10">
+                <div className="max-w-4xl mx-auto">
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+                        <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="inline-block px-4 py-2 rounded-full bg-accent-cyan/10 text-accent-cyan text-sm font-medium mb-4">
+                            {t('about_label')}
+                        </motion.span>
+                        <h2 className="section-title text-gradient">{t('about_title')}</h2>
+                    </motion.div>
 
-  return (
-    <section id="about" className="py-20 lg:py-32 bg-light-bg dark:bg-dark-bg">
-      <motion.div
-        className="container mx-auto px-6"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <motion.h2
-          variants={itemVariants}
-          className="text-3xl md:text-4xl font-bold text-center mb-12 text-light-text dark:text-dark-text"
-        >
-          {t('about_title')}
-        </motion.h2>
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="glass-card p-8 md:p-12">
+                        <p className="text-lg md:text-xl leading-relaxed text-light-text dark:text-dark-text mb-8">
+                            {t('about_intro')}
+                        </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
-          <motion.div
-            variants={itemVariants}
-            className="lg:col-span-2 flex justify-center"
-          >
-            <div className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-light-accent dark:border-dark-accent">
-              <Image
-                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop"
-                alt="To'rabek Raufov Profile Picture"
-                layout="fill"
-                objectFit="cover"
-                className="transform hover:scale-110 transition-transform duration-500"
-              />
+                        <p className="text-base md:text-lg leading-relaxed text-light-muted dark:text-dark-muted mb-8">
+                            {t('about_story')}
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                            {highlights.map((item, index) => {
+                                const Icon = item.icon;
+                                return (
+                                    <motion.div key={item.key} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 + index * 0.1 }} className="flex items-start gap-3 p-4 rounded-xl bg-white/50 dark:bg-white/5">
+                                        <Icon className={`w-5 h-5 ${item.color} mt-0.5 flex-shrink-0`} />
+                                        <p className="text-sm text-light-text dark:text-dark-text">{t(`about_highlight_${item.key}`)}</p>
+                                    </motion.div>
+                                );
+                            })}
+                        </div>
+                    </motion.div>
+                </div>
             </div>
-          </motion.div>
-          <motion.div variants={itemVariants} className="lg:col-span-3">
-            <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed text-justify">
-              {t('about_bio')}
-            </p>
-            <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-light-text dark:text-dark-text">
-                {t('about_fun_facts_title')}
-              </h3>
-              <ul className="space-y-2">
-                {facts.map((fact, index) => (
-                  <li key={index} className="flex items-center">
-                    <CheckCircle className="w-5 h-5 mr-3 text-light-accent dark:text-dark-accent" />
-                    <span className="text-gray-600 dark:text-gray-400">
-                      {fact}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default About;

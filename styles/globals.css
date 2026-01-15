@@ -1,16 +1,92 @@
-/* Import Tailwind CSS's base, components, and utilities layers */
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Define custom base styles for the application */
+:root {
+    --gradient-text: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #06b6d4 100%);
+}
+
 @layer base {
-  body {
-    /* Apply background and text colors for light mode by default */
-    @apply bg-light-bg text-light-text;
-    /* Apply background and text colors for dark mode when the 'dark' class is present */
-    @apply dark:bg-dark-bg dark:text-dark-text;
-    /* Add a smooth transition for color and background-color changes */
-    @apply transition-colors duration-300;
-  }
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text transition-colors duration-300;
+    }
+
+    ::selection {
+        @apply bg-accent-purple/30 text-white;
+    }
+}
+
+@layer components {
+    .text-gradient {
+        @apply bg-clip-text text-transparent;
+        background-image: var(--gradient-text);
+        background-size: 200% auto;
+    }
+
+    .text-gradient-animated {
+        @apply bg-clip-text text-transparent animate-gradient-flow;
+        background-image: var(--gradient-text);
+        background-size: 200% auto;
+    }
+
+    .glass-card {
+        @apply bg-white/80 dark:bg-dark-card/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 rounded-2xl shadow-card;
+    }
+
+    .glass-nav {
+        @apply bg-white/80 dark:bg-dark-surface/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/5;
+    }
+
+    .btn-primary {
+        @apply px-8 py-4 rounded-xl font-semibold text-white bg-gradient-to-r from-accent-purple via-accent-pink to-accent-cyan hover:shadow-glow transition-all duration-300 hover:scale-105 active:scale-95;
+        background-size: 200% auto;
+    }
+
+    .btn-primary:hover {
+        background-position: right center;
+    }
+
+    .btn-secondary {
+        @apply px-8 py-4 rounded-xl font-semibold bg-transparent border-2 border-accent-purple/50 text-accent-purple hover:bg-accent-purple/10 hover:border-accent-purple transition-all duration-300 hover:scale-105 active:scale-95;
+    }
+
+    .project-card {
+        @apply relative overflow-hidden rounded-2xl bg-white dark:bg-dark-card border border-gray-200 dark:border-white/10 p-6 transition-all duration-500 hover:shadow-card-hover hover:-translate-y-2 hover:border-accent-purple/30;
+    }
+
+    .section {
+        @apply py-24 px-6 relative;
+    }
+
+    .section-title {
+        @apply text-4xl md:text-5xl font-bold mb-6;
+    }
+
+    .section-subtitle {
+        @apply text-lg text-light-muted dark:text-dark-muted max-w-2xl;
+    }
+
+    .social-link {
+        @apply flex items-center gap-3 px-5 py-3 rounded-xl bg-white dark:bg-dark-card border border-gray-200 dark:border-white/10 hover:border-accent-purple/50 hover:shadow-card-hover transition-all duration-300;
+    }
+
+    .skill-badge {
+        @apply inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent-purple/10 text-accent-purple border border-accent-purple/20 text-sm font-medium;
+    }
+}
+
+@layer utilities {
+    .bg-grid {
+        background-image: linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+    }
+
+    .bg-dots {
+        background-image: radial-gradient(rgba(168, 85, 247, 0.15) 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
 }

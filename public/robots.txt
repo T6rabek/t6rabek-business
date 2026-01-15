@@ -1,0 +1,28 @@
+# robots.txt for t6rabek.uz
+# Personal Portfolio of To'rabek Raufov - Frontend Developer
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://t6rabek.uz/sitemap.xml
+
+# Crawl-delay for responsible crawling
+Crawl-delay: 1
+
+# Allow all major search engine bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandexbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block sensitive paths (none for this portfolio, but good practice)
+Disallow: /_next/static/
+Disallow: /api/

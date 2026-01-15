@@ -1,179 +1,83 @@
-import { useTranslation } from 'next-i18next';
 import { motion } from 'framer-motion';
-import { Mail, MapPin, Linkedin, Github, Send } from 'lucide-react';
+import { useTranslation } from 'next-i18next';
+import { Send, Mail, Linkedin, Instagram } from 'lucide-react';
+
+const socialLinks = [
+    {
+        key: 'telegram',
+        icon: Send,
+        href: 'https://t.me/T6rabek',
+        handle: '@T6rabek',
+        gradient: 'from-blue-400 to-blue-600',
+    },
+    {
+        key: 'email',
+        icon: Mail,
+        href: 'mailto:t6rabek.raufov@gmail.com',
+        handle: 't6rabek.raufov@gmail.com',
+        gradient: 'from-accent-purple to-accent-pink',
+    },
+    {
+        key: 'linkedin',
+        icon: Linkedin,
+        href: 'https://linkedin.com/in/t6rabek',
+        handle: 'linkedin.com/in/t6rabek',
+        gradient: 'from-blue-600 to-blue-800',
+    },
+    {
+        key: 'instagram',
+        icon: Instagram,
+        href: 'https://instagram.com/t6rabek_',
+        handle: '@t6rabek_',
+        gradient: 'from-pink-500 via-red-500 to-yellow-500',
+    },
+];
 
 const Contact = () => {
-  const { t } = useTranslation('common');
+    const { t } = useTranslation('common');
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
-  };
+    return (
+        <section id="contact" className="section relative overflow-hidden">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-purple/20 rounded-full blur-3xl" />
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: 'easeOut' },
-    },
-  };
+            <div className="container mx-auto relative z-10">
+                <div className="max-w-3xl mx-auto text-center">
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mb-12">
+                        <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="inline-block px-4 py-2 rounded-full bg-accent-purple/10 text-accent-purple text-sm font-medium mb-4">
+                            {t('contact_label')}
+                        </motion.span>
+                        <h2 className="section-title text-gradient">{t('contact_title')}</h2>
+                        <p className="section-subtitle mx-auto">{t('contact_subtitle')}</p>
+                    </motion.div>
 
-  const socialLinks = [
-    {
-      icon: <Linkedin />,
-      href: 'https://linkedin.com/in/your-profile',
-      label: 'LinkedIn',
-    },
-    {
-      icon: <Github />,
-      href: 'https://github.com/your-profile',
-      label: 'GitHub',
-    },
-    { icon: <Send />, href: 'https://t.me/your-profile', label: 'Telegram' },
-  ];
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+                        {socialLinks.map((social, index) => {
+                            const Icon = social.icon;
+                            return (
+                                <motion.a key={social.key} href={social.href} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} whileHover={{ scale: 1.02, y: -2 }} whileTap={{ scale: 0.98 }} className="social-link group">
+                                    <div className={`p-2 rounded-lg bg-gradient-to-r ${social.gradient}`}>
+                                        <Icon className="w-5 h-5 text-white" />
+                                    </div>
+                                    <div className="text-left">
+                                        <p className="text-sm text-light-muted dark:text-dark-muted">{t(`contact_${social.key}`)}</p>
+                                        <p className="font-medium text-light-text dark:text-dark-text group-hover:text-accent-purple transition-colors">{social.handle}</p>
+                                    </div>
+                                </motion.a>
+                            );
+                        })}
+                    </div>
 
-  return (
-    <section
-      id="contact"
-      className="py-20 lg:py-32 bg-white dark:bg-dark-surface"
-    >
-      <motion.div
-        className="container mx-auto px-6"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={containerVariants}
-      >
-        <motion.h2
-          variants={itemVariants}
-          className="text-3xl md:text-4xl font-bold text-center mb-4 text-light-text dark:text-dark-text"
-        >
-          {t('connect_title')}
-        </motion.h2>
-        <motion.p
-          variants={itemVariants}
-          className="text-lg text-gray-600 dark:text-gray-400 text-center max-w-2xl mx-auto mb-12"
-        >
-          {t('connect_desc')}
-        </motion.p>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <motion.div variants={itemVariants}>
-            <form
-              action="https://formspree.io/f/your_form_id"
-              method="POST"
-              className="space-y-6"
-            >
-              <div>
-                <label htmlFor="name" className="sr-only">
-                  {t('contact_form_name')}
-                </label>
-                <input
-                  type="text"
-                  name="name"
-                  id="name"
-                  placeholder={t('contact_form_name')}
-                  required
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border-2 border-transparent rounded-lg focus:outline-none focus:border-light-accent dark:focus:border-dark-accent text-light-text dark:text-dark-text"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="sr-only">
-                  {t('contact_form_email')}
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  placeholder={t('contact_form_email')}
-                  required
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border-2 border-transparent rounded-lg focus:outline-none focus:border-light-accent dark:focus:border-dark-accent text-light-text dark:text-dark-text"
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="sr-only">
-                  {t('contact_form_message')}
-                </label>
-                <textarea
-                  name="message"
-                  id="message"
-                  rows="5"
-                  placeholder={t('contact_form_message')}
-                  required
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-gray-800 border-2 border-transparent rounded-lg focus:outline-none focus:border-light-accent dark:focus:border-dark-accent text-light-text dark:text-dark-text"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full px-8 py-4 bg-light-accent dark:bg-dark-accent text-white font-bold rounded-lg shadow-lg hover:bg-light-accent-hover dark:hover:bg-dark-accent-hover transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
-              >
-                {t('contact_form_submit')} <Send className="ml-2 w-5 h-5" />
-              </button>
-            </form>
-          </motion.div>
-
-          {/* Contact Info & Socials */}
-          <motion.div variants={itemVariants} className="space-y-8">
-            <div className="flex items-start">
-              <div className="p-3 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full mr-4">
-                <Mail className="w-6 h-6 text-light-accent dark:text-dark-accent" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-                  {t('contact_info_email')}
-                </h3>
-                <a
-                  href={`mailto:${t('contact_info_email_value')}`}
-                  className="text-lg text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  {t('contact_info_email_value')}
-                </a>
-              </div>
+                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.4 }} className="mt-12">
+                        <p className="text-light-muted dark:text-dark-muted mb-6">{t('contact_cta_text')}</p>
+                        <motion.a href="https://t.me/T6rabek" target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="btn-primary inline-flex items-center gap-2">
+                            <Send className="w-5 h-5" />
+                            {t('contact_cta_button')}
+                        </motion.a>
+                    </motion.div>
+                </div>
             </div>
-            <div className="flex items-start">
-              <div className="p-3 bg-light-accent/10 dark:bg-dark-accent/10 rounded-full mr-4">
-                <MapPin className="w-6 h-6 text-light-accent dark:text-dark-accent" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-light-text dark:text-dark-text">
-                  {t('contact_info_location')}
-                </h3>
-                <p className="text-lg text-gray-600 dark:text-gray-400">
-                  {t('contact_info_location_value')}
-                </p>
-              </div>
-            </div>
-            <div className="mt-8">
-              <h3 className="text-xl font-bold mb-4 text-light-text dark:text-dark-text">
-                Follow Me
-              </h3>
-              <div className="flex space-x-4">
-                {socialLinks.map(link => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={link.label}
-                    className="p-3 bg-gray-200 dark:bg-gray-700 rounded-full text-light-text dark:text-dark-text hover:bg-light-accent dark:hover:bg-dark-accent hover:text-white dark:hover:text-white transition-colors duration-300"
-                  >
-                    {link.icon}
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </motion.div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default Contact;
